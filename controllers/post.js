@@ -1,14 +1,14 @@
+const { restart } = require("nodemon");
 const Post = require("../models/post");
 
-var postJson = {
-    posts: [
-        {title: "First post"},
-        {title: "Second post"}
-    ]
-};
-
 exports.getPosts = (req, res) => {
-    res.send(postJson);
+    // getting all posts with find()
+    const posts = Post.find()
+        .select("_id title body")
+        .then(posts => {
+            res.json({ posts });
+        })
+        .catch(err => console.log(err));
 };
 
 exports.createPost = (req,res) => {
@@ -17,7 +17,7 @@ exports.createPost = (req,res) => {
     console.log("CREATING POST: ", post);
 
     post.save().then(result => {
-        res.status(200).json({
+        res.json({
             post: result
         })
     });
