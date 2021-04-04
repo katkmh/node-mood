@@ -1,5 +1,6 @@
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8080;
 const morgan = require("morgan");
+const bodyParser = require("body-parser");
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
@@ -19,6 +20,7 @@ const postRoutes = require("./routes/post");
 
 // middleware (logging before)
 app.use(morgan('dev'));
+app.use(bodyParser.json());
 
 app.use('/', postRoutes);
 
